@@ -16,11 +16,6 @@ export function Camera({ onCapture }: CameraProps) {
 
   const getStream = async () => {
     try {
-      // First check if the browser supports mediaDevices
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        throw new Error("Your browser does not support camera access");
-      }
-
       // Check camera permission status
       const permission = await navigator.permissions.query({
         name: "camera" as PermissionName,
@@ -33,10 +28,14 @@ export function Camera({ onCapture }: CameraProps) {
       }
 
       // Request camera access
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "environment" },
+      const constraints = {
+        video: {
+          facingMode: "environment",
+        },
         audio: false,
-      });
+      };
+
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
       setMediaStream(stream);
 

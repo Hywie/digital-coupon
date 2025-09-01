@@ -28,6 +28,7 @@ For detailed documentation about features and requirements, see the [docs](./doc
 - [Image Capture Feature](./docs/features/image-capture.md)
 - [Barcode Scanning Feature](./docs/features/barcode-scanning.md)
 - [Coupon Storage and Management](./docs/features/coupon-storage.md)
+- [Mobile Testing Guide](./docs/mobile-testing.md)
 
 ## Development
 
