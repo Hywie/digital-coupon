@@ -2,7 +2,7 @@
 
 ## Overview
 
-The barcode scanning feature processes images of Nectar coupons to extract and store the barcode information for later use.
+The barcode scanning feature uses the device's camera to scan Nectar coupons in real-time, capturing and storing the barcode data for future redemption. No images are stored; only the barcode information is retained.
 
 ## Requirements
 
@@ -10,10 +10,10 @@ The barcode scanning feature processes images of Nectar coupons to extract and s
 
 1. Barcode Processing
 
-   - Detect barcodes in uploaded images
+   - Real-time barcode detection using device camera
    - Support common Nectar coupon barcode formats
    - Extract barcode data accurately
-   - Store barcode information securely
+   - Store barcode data in a format that can be reconstructed later for in-store scanning
 
 2. Error Handling
    - Detect and report unreadable barcodes
@@ -22,32 +22,36 @@ The barcode scanning feature processes images of Nectar coupons to extract and s
 
 ### Technical Requirements
 
-1. Barcode Detection
+1. Real-time Camera Integration
 
-   - Implement reliable barcode detection algorithm
-   - Support multiple barcode formats
+   - Access device camera through web APIs
+   - Continuous barcode detection in video stream
    - Optimize for mobile device performance
 
-2. Data Extraction
+2. Barcode Processing
 
-   - Parse barcode data accurately
-   - Validate barcode format
-   - Store structured data for easy retrieval
+   - Support standard retail barcode formats (EAN-13, Code 128, etc.)
+   - Parse and validate barcode data in real-time
+   - Store barcode data in a format that preserves all necessary information for reconstruction
 
 3. Performance
-   - Fast processing time
-   - Efficient memory usage
-   - Optimize for mobile devices
+   - Real-time scanning feedback
+   - Minimal CPU/battery usage
+   - Efficient error handling
 
 ### User Experience Requirements
 
-1. Feedback
+1. Camera Interface
 
-   - Clear indication of successful scan
-   - Helpful error messages for failed scans
-   - Progress indicators during processing
+   - Clear viewfinder for barcode alignment
+   - Visual and haptic feedback on successful scan
+   - Immediate error feedback for invalid or unreadable barcodes
 
 2. Accessibility
-   - Alternative input methods
-   - Clear success/error states
-   - Screen reader compatibility
+   - Manual barcode entry option as fallback
+   - Clear audio feedback for successful scans
+   - Screen reader compatibility for all status messages
+3. User Guidance
+   - On-screen instructions for optimal scanning
+   - Clear indication of scanning status
+   - Easy retry option for failed scans

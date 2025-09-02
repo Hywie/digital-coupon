@@ -25,7 +25,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 For detailed documentation about features and requirements, see the [docs](./docs) directory:
 
 - [Project Overview](./docs/README.md)
-- [Image Capture Feature](./docs/features/image-capture.md)
+- [Coupon Capture Flow](./docs/features/coupon-capture-flow.md)
 - [Barcode Scanning Feature](./docs/features/barcode-scanning.md)
 - [Coupon Storage and Management](./docs/features/coupon-storage.md)
 - [Mobile Testing Guide](./docs/mobile-testing.md)
