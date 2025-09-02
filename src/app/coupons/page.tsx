@@ -94,36 +94,36 @@ export default function CouponsPage() {
   return (
     <div className="container mx-auto p-4">
       {/* Search and Filter */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-6">
-        <div className="flex flex-1 sm:flex-row gap-4 mb-6">
-          <input
-            type="text"
-            placeholder="Search coupons..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <Link
-            href="/scan"
-            className="w-10 h-10 flex items-center justify-center bg-green-600 text-white rounded-full hover:bg-blue-700 transition-colors shadow-md"
-            aria-label="Add New Coupon"
+      <div className="flex flex-1 sm:flex-row gap-4 mb-6">
+        <input
+          type="text"
+          placeholder="Search coupons..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <Link
+          href="/scan"
+          className="w-10 h-10 flex items-center justify-center bg-green-600 text-white rounded-full hover:bg-blue-700 transition-colors shadow-md"
+          aria-label="Add New Coupon"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="w-6 h-6"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-          </Link>
-        </div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+        </Link>
+      </div>
+      <div className="flex flex-col sm:flex-row gap-4 mb-6">
         <div className="flex gap-2 overflow-x-auto pb-2">
           {(["all", "active", "used", "expired"] as const).map((status) => (
             <button
