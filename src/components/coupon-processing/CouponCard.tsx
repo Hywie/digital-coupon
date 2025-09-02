@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { ICoupon } from "@/lib/db/models/Coupon";
 import { Barcode } from "./Barcode";
+import Link from "next/link";
 
 interface CouponCardProps {
   coupon: ICoupon;
@@ -93,14 +94,32 @@ export function CouponCard({ coupon, onStatusChange }: CouponCardProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex justify-end gap-2">
+      <div className="flex justify-between items-center gap-2">
+        <Link
+          href={`/coupons/${coupon._id}`}
+          className="text-sm text-gray-600 hover:text-gray-800"
+        >
+          Edit Coupon
+        </Link>
+
         <button
           onClick={() => handleStatusChange("used")}
           disabled={isLoading || coupon.status === "used" || isExpired}
-          className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 
-                   disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+          className={`px-3 py-1.5 text-sm rounded transition-colors ${
+            coupon.status === "used"
+              ? "bg-gray-100 text-gray-500 cursor-not-allowed"
+              : isExpired
+              ? "bg-gray-100 text-gray-500 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+          }`}
         >
-          Mark as Used
+          {coupon.status === "used"
+            ? "Already Used"
+            : isExpired
+            ? "Expired"
+            : isLoading
+            ? "Marking..."
+            : "Mark as Used"}
         </button>
       </div>
     </div>
