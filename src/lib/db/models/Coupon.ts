@@ -3,9 +3,8 @@ import { z } from 'zod';
 
 // Zod schema for validation
 export const CouponSchema = z.object({
-  imageUrl: z.string().url(),
-  barcode: z.string(),
-  value: z.string(),
+  barcode: z.string().length(13),
+  description: z.string().min(5).max(100),
   expiryDate: z.date(),
   status: z.enum(['active', 'used', 'expired']),
   createdAt: z.date(),
@@ -14,9 +13,8 @@ export const CouponSchema = z.object({
 
 // TypeScript interface
 export interface ICoupon extends Document {
-  imageUrl: string;
   barcode: string;
-  value: string;
+  description: string;
   expiryDate: Date;
   status: 'active' | 'used' | 'expired';
   createdAt: Date;
@@ -26,18 +24,20 @@ export interface ICoupon extends Document {
 // Mongoose schema
 const couponSchema = new Schema<ICoupon>(
   {
-    imageUrl: {
-      type: String,
-      required: true,
-    },
     barcode: {
       type: String,
       required: true,
       unique: true,
+      validate: {
+        validator: (v: string) => v.length === 13 && /^\d+$/.test(v),
+        message: "Barcode must be 13 digits",
+      },
     },
-    value: {
+    description: {
       type: String,
       required: true,
+      minlength: 5,
+      maxlength: 100,
     },
     expiryDate: {
       type: Date,

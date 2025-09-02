@@ -49,9 +49,8 @@ export function BarcodeScanner({
             {
               video: {
                 facingMode: "environment",
-                width: { ideal: 1920, min: 1280 },
-                height: { ideal: 1080, min: 720 },
-                aspectRatio: { ideal: 1.777777778 },
+                width: { ideal: 1080, min: 720 },
+                height: { ideal: 1920, min: 1280 },
                 // Ask for highest quality and focus
                 frameRate: { ideal: 30, min: 15 },
               },
@@ -60,7 +59,7 @@ export function BarcodeScanner({
             (result: Result | null, error: Error | undefined) => {
               if (result) {
                 const barcodeText = result.getText();
-                alert(barcodeText);
+
                 // Validate ISBN-13 format (13 digits)
                 if (barcodeText.length === 13 && /^\d+$/.test(barcodeText)) {
                   onBarcodeDetected(barcodeText);
@@ -125,23 +124,35 @@ export function BarcodeScanner({
   }
 
   return (
-    <div className="relative">
-      <video ref={videoRef} className="w-full aspect-video rounded-lg" />
+    <div className="relative h-[80vh] max-h-[800px] flex items-center justify-center bg-black rounded-lg overflow-hidden">
+      <video ref={videoRef} className="absolute h-full w-full object-cover" />
       {isScanning && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="border-2 border-blue-500 rounded-lg w-48 h-24 mb-4">
-            <div className="w-full h-full relative">
-              {/* Corner markers for better alignment */}
-              <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-blue-500" />
-              <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-blue-500" />
-              <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-blue-500" />
-              <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-blue-500" />
+        <div className="relative z-10 flex flex-col items-center justify-center">
+          {/* Scanning frame that's appropriately sized for barcodes */}
+          <div className="relative w-64 h-32 mb-4">
+            {/* Semi-transparent overlay outside scanning area */}
+            <div className="fixed inset-0 bg-black/50">
+              {/* Clear window for scanning area */}
+              <div className="absolute left-1/2 top-1/2 w-64 h-32 -translate-x-1/2 -translate-y-1/2 bg-transparent" />
+            </div>
+
+            {/* Scanning frame border and corners */}
+            <div className="absolute inset-0 border-2 border-blue-500 rounded-lg">
+              {/* Corner markers */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-blue-500" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-blue-500" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-blue-500" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-blue-500" />
               {/* Scanning animation line */}
               <div className="absolute w-full h-0.5 bg-blue-500 animate-scan" />
             </div>
           </div>
-          <div className="text-sm text-white bg-black/50 px-4 py-2 rounded-lg text-center">
-            <p className="mb-1">Position the coupon barcode within the frame</p>
+
+          {/* Instructions */}
+          <div className="text-sm text-white px-4 py-2 rounded-lg text-center">
+            <p className="mb-1 font-medium">
+              Position the coupon barcode within the frame
+            </p>
             <p className="text-xs opacity-75">Looking for 13-digit barcode</p>
             <p className="text-xs opacity-75 mt-1">
               Hold camera steady and close to barcode
