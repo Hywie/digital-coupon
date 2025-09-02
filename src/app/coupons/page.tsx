@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CouponCard } from "@/components/coupon-processing/CouponCard";
+import { SwipeableCouponCard } from "@/components/coupon-processing/SwipeableCouponCard";
 import type { ICoupon } from "@/lib/db/models/Coupon";
 import Link from "next/link";
 
@@ -32,10 +32,7 @@ export default function CouponsPage() {
     fetchCoupons();
   }, []);
 
-  const handleStatusChange = async (
-    couponId: string,
-    newStatus: "active" | "used" | "expired"
-  ) => {
+  const handleStatusChange = async (couponId: string, newStatus: "used") => {
     try {
       const response = await fetch(`/api/coupons/${couponId}`, {
         method: "PATCH",
@@ -49,6 +46,20 @@ export default function CouponsPage() {
       await fetchCoupons();
     } catch (err) {
       console.error("Error updating coupon:", err);
+      throw err;
+    }
+  };
+
+  const handleDelete = async (couponId: string) => {
+    try {
+      const response = await fetch(`/api/coupons/${couponId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error("Failed to delete coupon");
+      await fetchCoupons();
+    } catch (err) {
+      console.error("Error deleting coupon:", err);
       throw err;
     }
   };
@@ -142,10 +153,11 @@ export default function CouponsPage() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {filteredCoupons.map((coupon) => (
-            <CouponCard
+            <SwipeableCouponCard
               key={coupon._id}
               coupon={coupon}
               onStatusChange={handleStatusChange}
+              onDelete={handleDelete}
             />
           ))}
         </div>
