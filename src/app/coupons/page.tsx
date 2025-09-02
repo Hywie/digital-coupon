@@ -10,7 +10,7 @@ export default function CouponsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "active" | "used" | "expired">(
-    "all"
+    "active"
   );
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -93,26 +93,37 @@ export default function CouponsPage() {
 
   return (
     <div className="container mx-auto p-4">
-      {/* Header with Add Button */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-        <h1 className="text-2xl font-bold">My Coupons</h1>
-        <Link
-          href="/scan"
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          Add New Coupon
-        </Link>
-      </div>
-
       {/* Search and Filter */}
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
-        <input
-          type="text"
-          placeholder="Search coupons..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <div className="flex flex-1 sm:flex-row gap-4 mb-6">
+          <input
+            type="text"
+            placeholder="Search coupons..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <Link
+            href="/scan"
+            className="w-10 h-10 flex items-center justify-center bg-green-600 text-white rounded-full hover:bg-blue-700 transition-colors shadow-md"
+            aria-label="Add New Coupon"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+          </Link>
+        </div>
         <div className="flex gap-2 overflow-x-auto pb-2">
           {(["all", "active", "used", "expired"] as const).map((status) => (
             <button
@@ -141,7 +152,7 @@ export default function CouponsPage() {
               ? "No coupons match your search"
               : "No coupons found"}
           </p>
-          {!searchQuery && filter === "all" && (
+          {!searchQuery && (filter === "all" || filter === "active") && (
             <Link
               href="/scan"
               className="text-blue-600 hover:text-blue-700 underline"
